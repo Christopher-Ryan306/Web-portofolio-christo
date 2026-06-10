@@ -1,89 +1,114 @@
-# 🎧 Portfolio Sound Engineer - Christopher Ryan Johnson
+# Website Portfolio RY Project
+## 📌 Deskripsi Project
 
-Website portfolio. Dibuat dengan Laravel, Tailwind CSS, dan Three.js untuk menampilkan model 3D interaktif.
+Website portfolio. Website ini menampilkan informasi profil, portfolio project, dan kontak yang dapat dikelola melalui halaman admin.
 
-## ✨ Fitur Utama
+## 🎯 Fitur yang Tersedia
 
-- 🎨 **Single Page Website** - Navigasi smooth scroll ke setiap section
-- 🎭 **Model 3D Interaktif** - Tampilkan avatar/model 3D tubuh dengan Three.js (drag to rotate, scroll to zoom)
-- 📸 **Foto Profile** - Upload foto profile di halaman About
-- 🎚️ **Portfolio Management** - CRUD project portfolio (Live Sound, Studio Mix, Event Production)
-- 📱 **Contact Information** - Kelola kontak (Email, WA, Instagram, YouTube, LinkedIn)
-- 🔐 **Authentication System** - Login admin untuk mengelola konten
-- 🎨 **Responsive Design** - Tampilan mobile friendly
-- 🌊 **Animasi Background** - Audio wave animation di hero section
+| Fitur | Keterangan |
+|-------|-------------|
+| **Landing Page** | Halaman utama dengan animasi audio wave dan model 3D interaktif |
+| **Tentang Saya** | Menampilkan foto profile, deskripsi diri, dan download CV |
+| **Portfolio** | Galeri project sound engineering (Live Sound, Studio Mix, Event) |
+| **Kontak** | Informasi kontak lengkap (Email, WA, Instagram, YouTube, LinkedIn) |
+| **Login Admin** | Sistem autentikasi untuk mengelola konten website |
+| **CRUD Portfolio** | Admin dapat menambah, edit, dan menghapus project |
+| **Model 3D** | Menampilkan model 3D tubuh (format .glb) yang bisa di-drag dan di-rotate |
 
-## 🛠️ Tech Stack
+## 🛠️ Teknologi yang Digunakan
 
-| Technology | Usage |
-|------------|-------|
-| Laravel 10 | Backend Framework |
-| Tailwind CSS | Styling |
-| Three.js | 3D Model Rendering |
-| SQLite | Database |
-| Laravel Breeze | Authentication |
+- **Laravel 10** - Backend framework
+- **Tailwind CSS** - Styling website
+- **Three.js** - Render model 3D
+- **SQLite** - Database
+- **Laravel Breeze** - Sistem autentikasi
 
-## 📋 Halaman Website
+## 📂 Struktur Database
 
-| Section | Deskripsi |
-|---------|-----------|
-| **Home / Hero** | Sapaan, title, dan model 3D |
-| **About** | Foto profile, bio panjang, download CV |
-| **Portfolio** | Gallery project sound engineering |
-| **Contact** | Informasi kontak lengkap |
+| Tabel | Fungsi |
+|-------|--------|
+| `profiles` | Menyimpan nama, title, bio, foto, model 3D, CV |
+| `portfolios` | Menyimpan data project (judul, kategori, deskripsi, gambar, client, tanggal) |
+| `contacts` | Menyimpan kontak (email, phone, wa, ig, youtube, linkedin, alamat) |
+| `users` | Menyimpan akun admin (dari Laravel Breeze) |
 
-## 🔐 Admin Credential (Default)
+## 🔐 Hak Akses
 
-| Role | Email | Password |
-|------|-------|----------|
-| Admin | admin@admin.com | password123 |
+| Role | Hak Akses |
+|------|-----------|
+| **Admin** | Login, mengubah profile, mengelola portfolio, mengelola kontak |
+| **Pengunjung** | Melihat semua halaman (tanpa login) |
 
+## 📱 Tampilan Website
 
-## 🚀 Cara Installasi
+### Halaman Utama (Home)
+- Hero section dengan typing animation
+- Model 3D interaktif di sisi kanan
+- Tombol navigasi ke portfolio dan kontak
 
-### Prasyarat
-- PHP 8.1+
-- Composer
-- Node.js & NPM
+### Halaman About
+- Foto profile
+- Deskripsi panjang tentang diri
+- Tombol download CV
 
-### Langkah Installasi
+### Halaman Portfolio
+- Grid card project
+- Setiap card menampilkan gambar, kategori, judul, client, dan tanggal
+- Klik card untuk melihat detail project
 
-```bash
-# 1. Clone repository
-git clone https://github.com/Christopher-Ryan306/Web-portofolio-christo.git
-cd Web-portofolio-christo
+### Halaman Kontak
+- Menampilkan semua kontak yang sudah diisi admin
+- Icon modern menggunakan Font Awesome
+- Link langsung ke WhatsApp, Instagram, YouTube, dll
 
-# 2. Install dependencies
-composer install
-npm install
+### Halaman Admin
+- **Profile:** Upload foto, model 3D, CV, edit bio
+- **Portfolio:** Tambah/edit/hapus project
+- **Contact:** Edit semua informasi kontak
 
-# 3. Setup environment
-cp .env.example .env
-php artisan key:generate
+## 🎨 Tema Website
 
-# 4. Setup database (SQLite)
-touch database/database.sqlite
-# Atau buat file database/database.sqlite manual
+- **Warna utama:** Hitam (#000000) dan Biru Muda (#38bdf8)
+- **Font:** Poppins
+- **Background:** Animasi audio wave di hero section
+- **Responsif:** Mendukung desktop, tablet, dan mobile
 
-# 5. Run migration
-php artisan migrate
+## 🖼️ Model 3D
 
-# 6. Buat storage link
-php artisan storage:link
+Model 3D yang digunakan berformat `.glb`.  
+Sumber model dapat dari:
+- Ready Player Me (avatar gratis)
+- Sketchfab (filter free download)
 
-# 7. Buat user admin
-php artisan tinker
->>> App\Models\User::create([
-    'name' => 'Admin',
-    'email' => 'admin@admin.com',
-    'password' => bcrypt('password123')
-]);
->>> exit
+Cara upload:
+1. Login sebagai admin
+2. Buka halaman Admin → Profile
+3. Upload file .glb pada bagian Model 3D
 
-# 8. Jalankan development server
-npm run dev
-php artisan serve
+## 👤 Contoh Akun Admin
 
-## License
+| Field | Value |
+|-------|-------|
+| Email | admin@admin.com |
+| Password | password123 |
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+> *Password dapat diubah melalui halaman profile setelah login*
+
+## 📷 Screenshot Website
+
+| Halaman | Tampilan |
+|---------|----------|
+| Home | ![Home](public/images/1.png) |
+| About | ![About](public/images/2.png) |
+| Portfolio | ![Portfolio](public/images/3.png) |
+| Contact | ![Contact](public/images/4.png) |
+| Admin | ![Admin](public/images/5.png) |
+## 📞 Kontak Pembuat
+
+- **Nama:** Christopher Ryan Johnson
+- **Email:** rynz3060@gmail.com
+- **Instagram:** @nna.yrrr
+
+---
+
+**Dibuat untuk memenuhi tugas portfolio pribadi.**
