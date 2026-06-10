@@ -94,15 +94,7 @@ Cara upload:
 
 > *Password dapat diubah melalui halaman profile setelah login*
 
-## 📷 Screenshot Website
 
-| Halaman | Tampilan |
-|---------|----------|
-| Home | ![Home](public/images/1.png) |
-| About | ![About](public/images/2.png) |
-| Portfolio | ![Portfolio](public/images/3.png) |
-| Contact | ![Contact](public/images/4.png) |
-| Admin | ![Admin](public/images/5.png) |
 ## 📞 Kontak Pembuat
 
 - **Nama:** Christopher Ryan Johnson
