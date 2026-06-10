@@ -1,526 +1,412 @@
 @extends('layouts.app')
-
-@section('title', 'Home')
-
-@push('styles')
-<style>
-    /* Hero Section */
-    .hero {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        position: relative;
-        padding-top: 80px;
-        overflow: hidden;
-    }
-
-    .hero::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        right: -20%;
-        width: 800px;
-        height: 800px;
-        background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
-        border-radius: 50%;
-    }
-
-    .hero::after {
-        content: '';
-        position: absolute;
-        bottom: -30%;
-        left: -10%;
-        width: 600px;
-        height: 600px;
-        background: radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, transparent 70%);
-        border-radius: 50%;
-    }
-
-    .hero-content {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 60px;
-        align-items: center;
-        position: relative;
-        z-index: 1;
-    }
-
-    .hero-text h1 {
-        font-size: 3.5rem;
-        line-height: 1.2;
-        margin-bottom: 10px;
-        color: var(--white);
-    }
-
-    .hero-text h1 span {
-        background: var(--gradient);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
-    .hero-subtitle {
-        font-size: 1.5rem;
-        color: var(--gray);
-        margin-bottom: 25px;
-    }
-
-    .hero-desc {
-        color: var(--gray);
-        font-size: 1.1rem;
-        margin-bottom: 35px;
-        max-width: 500px;
-    }
-
-    .hero-buttons {
-        display: flex;
-        gap: 20px;
-        flex-wrap: wrap;
-    }
-
-    .hero-image {
-        position: relative;
-    }
-
-    .hero-image-wrapper {
-        position: relative;
-        width: 400px;
-        height: 400px;
-        margin: 0 auto;
-    }
-
-    .hero-image-wrapper::before {
-        content: '';
-        position: absolute;
-        inset: -20px;
-        background: var(--gradient);
-        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-        animation: morph 8s ease-in-out infinite;
-        opacity: 0.3;
-    }
-
-    .hero-image-wrapper img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-        animation: morph 8s ease-in-out infinite;
-        position: relative;
-        z-index: 1;
-    }
-
-    @keyframes morph {
-        0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
-        50% { border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%; }
-    }
-
-    .floating-elements {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-    }
-
-    .floating-element {
-        position: absolute;
-        background: var(--gradient);
-        border-radius: 50%;
-        opacity: 0.6;
-        animation: float 6s ease-in-out infinite;
-    }
-
-    .floating-element:nth-child(1) {
-        width: 60px;
-        height: 60px;
-        top: 10%;
-        left: 10%;
-        animation-delay: 0s;
-    }
-
-    .floating-element:nth-child(2) {
-        width: 40px;
-        height: 40px;
-        top: 60%;
-        right: 10%;
-        animation-delay: 2s;
-    }
-
-    .floating-element:nth-child(3) {
-        width: 30px;
-        height: 30px;
-        bottom: 20%;
-        left: 20%;
-        animation-delay: 4s;
-    }
-
-    @keyframes float {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-20px); }
-    }
-
-    /* Stats Section */
-    .stats {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 30px;
-        padding: 60px 0;
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .stat-item {
-        text-align: center;
-    }
-
-    .stat-number {
-        font-size: 3rem;
-        font-weight: 800;
-        background: var(--gradient);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
-    .stat-label {
-        color: var(--gray);
-        font-size: 1rem;
-        margin-top: 5px;
-    }
-
-    /* Skills Preview */
-    .skills-preview {
-        background: var(--dark-light);
-    }
-
-    .skills-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 30px;
-    }
-
-    .skill-card {
-        padding: 40px 30px;
-        border-radius: 20px;
-        background: var(--dark);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        transition: all 0.3s ease;
-    }
-
-    .skill-card:hover {
-        border-color: rgba(99, 102, 241, 0.3);
-        transform: translateY(-5px);
-    }
-
-    .skill-icon {
-        width: 60px;
-        height: 60px;
-        background: var(--gradient);
-        border-radius: 15px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-        color: var(--white);
-        margin-bottom: 20px;
-    }
-
-    .skill-card h3 {
-        font-family: 'Inter', sans-serif;
-        font-size: 1.2rem;
-        margin-bottom: 10px;
-        color: var(--white);
-    }
-
-    .skill-card p {
-        color: var(--gray);
-        font-size: 0.95rem;
-    }
-
-    /* Portfolio Preview */
-    .portfolio-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 30px;
-    }
-
-    .portfolio-card {
-        cursor: pointer;
-    }
-
-    .portfolio-image {
-        position: relative;
-        overflow: hidden;
-        border-radius: 20px 20px 0 0;
-        aspect-ratio: 16/10;
-    }
-
-    .portfolio-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.5s ease;
-    }
-
-    .portfolio-card:hover .portfolio-image img {
-        transform: scale(1.1);
-    }
-
-    .portfolio-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(180deg, transparent 0%, rgba(15, 23, 42, 0.9) 100%);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        display: flex;
-        align-items: flex-end;
-        padding: 30px;
-    }
-
-    .portfolio-card:hover .portfolio-overlay {
-        opacity: 1;
-    }
-
-    .portfolio-info {
-        padding: 25px;
-    }
-
-    .portfolio-category {
-        display: inline-block;
-        padding: 5px 15px;
-        background: rgba(99, 102, 241, 0.1);
-        color: var(--primary);
-        border-radius: 50px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        margin-bottom: 10px;
-    }
-
-    .portfolio-info h3 {
-        font-family: 'Inter', sans-serif;
-        font-size: 1.2rem;
-        color: var(--white);
-        margin-bottom: 8px;
-    }
-
-    .portfolio-info p {
-        color: var(--gray);
-        font-size: 0.9rem;
-    }
-
-    /* CTA Section */
-    .cta {
-        text-align: center;
-        background: linear-gradient(180deg, var(--dark) 0%, var(--dark-light) 100%);
-    }
-
-    .cta-content {
-        max-width: 700px;
-        margin: 0 auto;
-    }
-
-    .cta h2 {
-        font-size: 2.5rem;
-        color: var(--white);
-        margin-bottom: 20px;
-    }
-
-    .cta p {
-        color: var(--gray);
-        font-size: 1.1rem;
-        margin-bottom: 35px;
-    }
-
-    /* Responsive */
-    @media (max-width: 992px) {
-        .hero-content {
-            grid-template-columns: 1fr;
-            text-align: center;
-        }
-
-        .hero-text h1 {
-            font-size: 2.5rem;
-        }
-
-        .hero-desc {
-            margin: 0 auto 35px;
-        }
-
-        .hero-buttons {
-            justify-content: center;
-        }
-
-        .hero-image-wrapper {
-            width: 300px;
-            height: 300px;
-        }
-
-        .stats {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        .skills-grid,
-        .portfolio-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    @media (max-width: 576px) {
-        .hero-text h1 {
-            font-size: 2rem;
-        }
-
-        .stats {
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-        }
-
-        .skills-grid,
-        .portfolio-grid {
-            grid-template-columns: 1fr;
-        }
-    }
-</style>
-@endpush
+@section('title', 'Sound Engineer Portfolio')
 
 @section('content')
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="floating-elements">
-            <div class="floating-element"></div>
-            <div class="floating-element"></div>
-            <div class="floating-element"></div>
+{{-- ========== HERO SECTION (HOME) dengan Model 3D ========== --}}
+<section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+    <!-- Background Audio Wave Animation -->
+    <canvas id="waveCanvas" class="absolute inset-0 w-full h-full opacity-30"></canvas>
+    
+    <div class="relative z-10 max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <!-- Left Side - Text -->
+            <div class="text-center md:text-left">
+                <p class="text-sky-400 font-semibold tracking-[0.3em] mb-4">SOUND ENGINEER</p>
+                <h1 class="text-5xl md:text-7xl font-black mb-4">
+                    {{ $profile->name ?? 'YOUR NAME' }}
+                </h1>
+                <div class="text-xl md:text-2xl text-sky-400 font-semibold mb-6 h-10">
+                    <span class="typing-text"></span>
+                </div>
+                <p class="text-gray-300 mb-8 text-lg">
+                    {{ $profile->bio ?? 'Mixing the perfect sound, one frequency at a time.' }}
+                </p>
+                <div class="flex gap-4 justify-center md:justify-start flex-wrap">
+                    <a href="#portfolio" class="px-8 py-3 bg-sky-600 hover:bg-sky-700 rounded-lg transition-all duration-300 font-semibold shadow-lg shadow-sky-600/30">
+                        View Projects
+                    </a>
+                    <a href="#contact" class="px-8 py-3 border border-sky-500 hover:bg-sky-500/10 rounded-lg transition">
+                        Get in Touch
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Right Side - 3D Model -->
+            <div>
+                <div id="model-viewer" class="w-full h-[500px] md:h-[550px] relative overflow-hidden" style="background: transparent; border: none;">
+                    <div id="model-loading" class="absolute inset-0 flex items-center justify-center text-sky-400">
+                        Loading 3D Model...
+                    </div>
+                </div>
+                <p class="text-center text-gray-500 text-sm mt-3">🖱️ Drag to rotate • Scroll to zoom</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <a href="#about" class="text-sky-400 text-2xl">↓</a>
+    </div>
+</section>
+    
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <a href="#about" class="text-sky-400 text-2xl">↓</a>
+    </div>
+</section>
+
+    {{-- ========== ABOUT SECTION dengan FOTO PROFILE ========== --}}
+<section id="about" class="py-24 px-6 max-w-7xl mx-auto">
+    <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">
+            About <span class="text-sky-400">Me</span>
+        </h2>
+        <div class="w-20 h-1 bg-sky-500 mx-auto"></div>
+    </div>
+    
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+        <!-- Left Side - Foto Profile -->
+        <div class="flex justify-center">
+            @if($profile && $profile->photo)
+            <div class="relative">
+                <div class="w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden border-4 border-sky-500 shadow-2xl shadow-sky-500/30 bg-black">
+                    <img src="{{ asset('storage/'.$profile->photo) }}" 
+                         alt="Profile Photo" 
+                         class="w-full h-full object-cover object-[center_15%]">
+                </div>
+                <!-- Decorative ring -->
+                <div class="absolute -inset-4 rounded-2xl border-2 border-sky-500/20 -z-10"></div>
+                <div class="absolute -inset-8 rounded-2xl border border-sky-500/10 -z-20"></div>
+            </div>
+            @else
+            <div class="w-64 h-64 md:w-80 md:h-80 rounded-2xl bg-gradient-to-br from-sky-900/40 to-black flex items-center justify-center border-2 border-sky-500/30">
+                <span class="text-sky-400 text-6xl">🎧</span>
+            </div>
+            @endif
         </div>
         
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text" data-aos="fade-right">
-                    <h1>Halo, Saya <span>{{ $profile['name'] }}</span></h1>
-                    <p class="hero-subtitle">{{ $profile['title'] }}</p>
-                    <p class="hero-desc">{{ $profile['bio'] }}</p>
-                    <div class="hero-buttons">
-                        <a href="{{ route('portfolio') }}" class="btn btn-primary">
-                            <i class="fas fa-briefcase"></i> Lihat Portfolio
-                        </a>
-                        <a href="{{ $profile['cv_link'] }}" class="btn btn-outline" target="_blank">
-                            <i class="fas fa-download"></i> Download CV
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-image" data-aos="fade-left">
-                    <div class="hero-image-wrapper">
-                        <img src="{{ $profile['photo'] }}" alt="{{ $profile['name'] }}">
-                    </div>
-                </div>
+        <!-- Right Side - About Text -->
+        <div>
+            <p class="text-sky-400 font-semibold tracking-widest mb-3">WHO AM I</p>
+            <h3 class="text-3xl font-bold mb-4">{{ $profile->name ?? 'Your Name' }}</h3>
+            <p class="text-xl text-sky-400 mb-6">{{ $profile->title ?? 'Sound Engineer' }}</p>
+            <div class="text-gray-300 space-y-4 leading-relaxed">
+                {!! nl2br(e($profile->about_long ?? 'Tulis cerita panjang tentang dirimu di halaman admin. Ceritakan pengalaman sound engineering, alat yang dikuasai, project pernah dikerjakan, dan filosofi audio kamu.')) !!}
             </div>
+            @if($profile && $profile->cv_file)
+            <a href="{{ asset('storage/'.$profile->cv_file) }}" target="_blank" class="inline-flex items-center gap-2 mt-8 px-6 py-3 bg-sky-600 hover:bg-sky-700 rounded-lg transition">
+                 Download CV
+            </a>
+            @endif
         </div>
-    </section>
+    </div>
+</section>
+    
 
-    <!-- Stats Section -->
-    <section class="section" style="padding-top: 0;">
-        <div class="container">
-            <div class="stats" data-aos="fade-up">
-                <div class="stat-item">
-                    <div class="stat-number">5+</div>
-                    <div class="stat-label">Tahun Pengalaman</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">50+</div>
-                    <div class="stat-label">Project Selesai</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">30+</div>
-                    <div class="stat-label">Klien Puas</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">10+</div>
-                    <div class="stat-label">Penghargaan</div>
-                </div>
-            </div>
+{{-- ========== PORTFOLIO SECTION ========== --}}
+<section id="portfolio" class="py-24 px-6 bg-black/40">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                My <span class="text-sky-400">Portofolio</span>
+            </h2>
+            <div class="w-20 h-1 bg-sky-500 mx-auto"></div>
+            <p class="text-gray-400 mt-4"></p>
         </div>
-    </section>
-
-    <!-- Skills Preview -->
-    <section class="section skills-preview">
-        <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <span class="section-subtitle">Keahlian</span>
-                <h2 class="section-title">Apa yang Saya Lakukan</h2>
-                <p class="section-desc">Saya memiliki berbagai keahlian untuk membantu mewujudkan ide Anda menjadi kenyataan.</p>
-            </div>
-
-            <div class="skills-grid">
-                <div class="skill-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="skill-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>Web Development</h3>
-                    <p>Membangun website modern, responsif, dan performa tinggi dengan teknologi terkini.</p>
-                </div>
-                <div class="skill-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="skill-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>Mobile App</h3>
-                    <p>Mengembangkan aplikasi mobile yang user-friendly untuk iOS dan Android.</p>
-                </div>
-                <div class="skill-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="skill-icon">
-                        <i class="fas fa-palette"></i>
-                    </div>
-                    <h3>UI/UX Design</h3>
-                    <p>Mendesain interface yang menarik dan pengalaman pengguna yang optimal.</p>
-                </div>
-            </div>
+        
+        @if($portfolios->isEmpty())
+            <p class="text-center text-gray-500">Belum ada project. Tambahkan dari admin panel.</p>
+        @else
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @foreach($portfolios as $p)
+<a href="{{ route('portfolio.detail', $p->id) }}" class="group bg-gradient-to-br from-gray-900 to-black border border-sky-500/20 rounded-xl overflow-hidden hover:border-sky-500/60 transition-all duration-300 hover:-translate-y-2 block">
+    @if($p->image)
+        <div class="overflow-hidden">
+            <img src="{{ asset('storage/'.$p->image) }}" class="w-full h-56 object-cover group-hover:scale-110 transition duration-500">
         </div>
-    </section>
-
-    <!-- Portfolio Preview -->
-    <section class="section">
-        <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <span class="section-subtitle">Portfolio</span>
-                <h2 class="section-title">Project Terbaru</h2>
-                <p class="section-desc">Beberapa karya terbaik yang telah saya selesaikan.</p>
-            </div>
-
-            <div class="portfolio-grid">
-                @foreach($portfolios as $index => $portfolio)
-                <a href="{{ route('portfolio.detail', $portfolio['id']) }}" class="card portfolio-card" data-aos="fade-up" data-aos-delay="{{ ($index + 1) * 100 }}">
-                    <div class="portfolio-image">
-                        <img src="{{ $portfolio['image'] }}" alt="{{ $portfolio['title'] }}">
-                        <div class="portfolio-overlay"></div>
-                    </div>
-                    <div class="portfolio-info">
-                        <span class="portfolio-category">{{ $portfolio['category'] }}</span>
-                        <h3>{{ $portfolio['title'] }}</h3>
-                        <p>{{ $portfolio['description'] }}</p>
-                    </div>
-                </a>
-                @endforeach
-            </div>
-
-            <div style="text-align: center; margin-top: 50px;" data-aos="fade-up">
-                <a href="{{ route('portfolio') }}" class="btn btn-primary">
-                    Lihat Semua Project <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
+    @else
+        <div class="w-full h-56 bg-gradient-to-br from-sky-900/40 to-black flex items-center justify-center">
+            <span class="text-sky-400 text-5xl">🎚️</span>
         </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="section cta">
-        <div class="container">
-            <div class="cta-content" data-aos="fade-up">
-                <h2>Punya Project Menarik?</h2>
-                <p>Mari bekerja sama untuk mewujudkan ide Anda. Saya selalu terbuka untuk diskusi tentang project baru, ide kreatif, atau kesempatan untuk menjadi bagian dari visi Anda.</p>
-                <a href="{{ route('contact') }}" class="btn btn-primary">
-                    <i class="fas fa-envelope"></i> Hubungi Saya
-                </a>
-            </div>
+    @endif
+    <div class="p-6">
+        <span class="text-xs text-sky-400 font-semibold tracking-widest">{{ $p->category ?? 'PROJECT' }}</span>
+        <h3 class="text-xl font-bold mt-2 mb-3 group-hover:text-sky-400 transition">{{ $p->title }}</h3>
+        <p class="text-gray-400 mb-4 line-clamp-2 text-sm">{{ $p->description }}</p>
+        <div class="text-sm text-gray-500 space-y-1">
+            @if($p->client)<p>Client: <span class="text-gray-300">{{ $p->client }}</span></p>@endif
+            @if($p->projectdate)<p>Date: <span class="text-gray-300">{{ $p->projectdate->format('M Y') }}</span></p>@endif
         </div>
-    </section>
+    </div>
+</a>
+@endforeach
+                </div>
+        @endif
+    </div>
+</section>
+
+{{-- ========== CONTACT SECTION ========== --}}
+<section id="contact" class="py-24 px-6 max-w-6xl mx-auto">
+    <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">
+            My <span class="text-sky-400">Contact</span>
+        </h2>
+        <div class="w-20 h-1 bg-sky-500 mx-auto"></div>
+        <p class="text-gray-400 mt-4"></p>
+    </div>
+    
+    <div class="grid md:grid-cols-2 gap-6">
+        @php
+            $items = [
+                ['icon' => '', 'label' => 'Email', 'value' => $contact->email ?? null, 'link' => $contact->email ? 'mailto:'.$contact->email : null],
+                ['icon' => '', 'label' => 'Phone', 'value' => $contact->phone ?? null, 'link' => $contact->phone ? 'tel:'.$contact->phone : null],
+                ['icon' => '', 'label' => 'WhatsApp', 'value' => $contact->whatsapp ?? null, 'link' => $contact->whatsapp ? 'https://wa.me/'.preg_replace('/[^0-9]/', '', $contact->whatsapp) : null],
+                ['icon' => '', 'label' => 'Instagram', 'value' => $contact->instagram ?? null, 'link' => $contact->instagram ? 'https://instagram.com/'.ltrim($contact->instagram, '@') : null],
+                ['icon' => '', 'label' => 'YouTube', 'value' => $contact->youtube ?? null, 'link' => $contact->youtube ?? null],
+                ['icon' => '', 'label' => 'LinkedIn', 'value' => $contact->linkedin ?? null, 'link' => $contact->linkedin ?? null],
+            ];
+        @endphp
+
+        @foreach($items as $item)
+            @if($item['value'])
+            <a href="{{ $item['link'] }}" target="_blank" class="group flex items-center gap-4 p-6 bg-gradient-to-br from-gray-900 to-black border border-sky-500/20 rounded-xl hover:border-sky-500/60 transition-all duration-300 hover:-translate-y-1">
+                <span class="text-4xl">{{ $item['icon'] }}</span>
+                <div>
+                    <p class="text-sky-400 text-sm font-semibold">{{ $item['label'] }}</p>
+                    <p class="text-white font-medium">{{ $item['value'] }}</p>
+                </div>
+            </a>
+            @endif
+        @endforeach
+    </div>
+    
+    @if($contact && $contact->address)
+    <div class="mt-6 p-6 bg-gradient-to-br from-gray-900 to-black border border-sky-500/20 rounded-xl">
+        <p class="text-sky-400 text-sm font-semibold mb-2">📍 Studio Location</p>
+        <p class="text-gray-300">{{ $contact->address }}</p>
+    </div>
+    @endif
+</section>
+
+{{-- Animasi Audio Wave --}}
+<script>
+const canvas = document.getElementById('waveCanvas');
+if (canvas) {
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    let t = 0;
+    function drawWave() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 2;
+        for (let i = 0; i < 5; i++) {
+            ctx.beginPath();
+            ctx.globalAlpha = 0.3 - (i * 0.05);
+            for (let x = 0; x < canvas.width; x += 5) {
+                const y = canvas.height/2 + Math.sin((x + t + i*100) * 0.01) * (50 + i*20);
+                x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+        }
+        t += 2;
+        requestAnimationFrame(drawWave);
+    }
+    drawWave();
+    
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+}
+
+// Typing animation
+const words = ['Sound Engineer', 'Stage Crew', 'Live Sound Expert', 'Visual Jockey'];
+let wordIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+const typingElement = document.querySelector('.typing-text');
+
+function typeEffect() {
+    const currentWord = words[wordIndex];
+    if (isDeleting) {
+        typingElement.textContent = currentWord.substring(0, charIndex - 1);
+        charIndex--;
+    } else {
+        typingElement.textContent = currentWord.substring(0, charIndex + 1);
+        charIndex++;
+    }
+    
+    if (!isDeleting && charIndex === currentWord.length) {
+        isDeleting = true;
+        setTimeout(typeEffect, 2000);
+        return;
+    }
+    
+    if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        wordIndex = (wordIndex + 1) % words.length;
+    }
+    
+    setTimeout(typeEffect, isDeleting ? 100 : 150);
+}
+
+if (typingElement) typeEffect();
+</script>
+
+{{-- Three.js untuk Model 3D --}}
+<script type="importmap">
+{
+    "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+const container = document.getElementById('model-viewer');
+if (container) {
+    const loading = document.getElementById('model-loading');
+    
+    // Hapus background/warna container biar transparan
+    container.style.background = 'transparent';
+    container.style.border = 'none';
+    
+    const scene = new THREE.Scene();
+    scene.background = null; // Transparan
+    
+    const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+    camera.position.set(0, 1.5, 4); // Posisi kamera di tengah
+    
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); // alpha true = transparan
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setClearColor(0x000000, 0); // Clear color transparan
+    renderer.setPixelRatio(window.devicePixelRatio);
+    container.appendChild(renderer.domElement);
+    
+    // ========== LIGHTING YANG LEBIH TERANG ==========
+    
+    // Ambient light - terang merata
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+    scene.add(ambientLight);
+    
+    // Main light dari depan atas (warna putih terang)
+    const mainLight = new THREE.DirectionalLight(0xffffff, 1.2);
+    mainLight.position.set(2, 3, 2);
+    scene.add(mainLight);
+    
+    // Fill light dari samping kiri
+    const fillLight = new THREE.DirectionalLight(0x88aaff, 0.8);
+    fillLight.position.set(-2, 1, 2);
+    scene.add(fillLight);
+    
+    // Back light dari belakang (buat outline)
+    const backLight = new THREE.DirectionalLight(0x3388ff, 0.6);
+    backLight.position.set(0, 2, -3);
+    scene.add(backLight);
+    
+    // Rim light dari kanan bawah (efek dramatis)
+    const rimLight = new THREE.PointLight(0x44aaff, 0.5);
+    rimLight.position.set(1, 0, 1.5);
+    scene.add(rimLight);
+    
+    // Soft fill dari bawah
+    const bottomFill = new THREE.PointLight(0x6699ff, 0.3);
+    bottomFill.position.set(0, -1, 0);
+    scene.add(bottomFill);
+    
+    // Controls
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.minDistance = 2;
+    controls.maxDistance = 8;
+    controls.target.set(0, 1.2, 0); // Target di tengah
+    
+    // Ambil path dari database
+    const modelPath = "{{ $profile && $profile->model_3d ? asset('storage/'.$profile->model_3d) : '' }}";
+    console.log('📦 Model path:', modelPath);
+    
+    if (modelPath && modelPath !== '') {
+        if (loading) loading.innerHTML = '⏳ Loading 3D model...';
+        
+        const loader = new GLTFLoader();
+        loader.load(
+            modelPath,
+            (gltf) => {
+                console.log('✅ Model loaded!', gltf);
+                const model = gltf.scene;
+                
+                // Hitung bounding box
+                const box = new THREE.Box3().setFromObject(model);
+                const center = box.getCenter(new THREE.Vector3());
+                const size = box.getSize(new THREE.Vector3());
+                
+                // Scale agar proporsional dengan container
+                const maxDim = Math.max(size.x, size.y, size.z);
+                const targetHeight = 2.2; // Tinggi target
+                const scale = targetHeight / maxDim;
+                model.scale.setScalar(scale);
+                
+                // Posisi di tengah (Y sumbu)
+                model.position.x = -center.x * scale;
+                model.position.y = -center.y * scale + 1.5; // Naikkan sedikit
+                model.position.z = -center.z * scale;
+                
+                scene.add(model);
+                
+                // Update target controls ke posisi model
+                controls.target.set(0, 1.2, 0);
+                controls.update();
+                
+                if (loading) loading.style.display = 'none';
+            },
+            (xhr) => {
+                const percent = Math.round(xhr.loaded / xhr.total * 100);
+                if (loading) loading.innerHTML = `⏳ Loading... ${percent}%`;
+            },
+            (error) => {
+                console.error('❌ Error:', error);
+                if (loading) {
+                    loading.innerHTML = '❌ Gagal memuat model 3D';
+                }
+                // Tampilkan placeholder
+                const geometry = new THREE.IcosahedronGeometry(0.9, 1);
+                const material = new THREE.MeshStandardMaterial({ color: 0x38bdf8, wireframe: true });
+                const placeholder = new THREE.Mesh(geometry, material);
+                placeholder.position.y = 1;
+                scene.add(placeholder);
+                if (loading) loading.style.display = 'none';
+            }
+        );
+    } else {
+        console.log('⚠️ No model path found');
+        if (loading) loading.innerHTML = '📁 Belum ada model 3D';
+        
+        const geometry = new THREE.IcosahedronGeometry(0.9, 1);
+        const material = new THREE.MeshStandardMaterial({ color: 0x38bdf8, wireframe: true });
+        const placeholder = new THREE.Mesh(geometry, material);
+        placeholder.position.y = 1;
+        scene.add(placeholder);
+        if (loading) loading.style.display = 'none';
+    }
+    
+    function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+    }
+    animate();
+    
+    window.addEventListener('resize', () => {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+}
+</script>
 @endsection
