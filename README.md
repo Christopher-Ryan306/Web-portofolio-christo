@@ -14,6 +14,21 @@ Website portfolio. Website ini menampilkan informasi profil, portfolio project, 
 | **Login Admin** | Sistem autentikasi untuk mengelola konten website |
 | **CRUD Portfolio** | Admin dapat menambah, edit, dan menghapus project |
 | **Model 3D** | Menampilkan model 3D tubuh (format .glb) yang bisa di-drag dan di-rotate |
+| **AI Chatbot** | 🤖 Asisten virtual di pojok kiri atas |
+
+## 🤖 Fitur AI Chatbot
+
+### Cara Menggunakan:
+1. Klik tombol **💬** di pojok kiri atas
+2. Ketik pertanyaan seperti "Siapa pemilik website?"
+3. Bot akan menjawab otomatis
+
+### Contoh Pertanyaan:
+- "Ceritakan tentang dirimu"
+- "Apa saja portfolio-nya?"
+- "Bagaimana cara kontak?"
+- "Teknologi apa yang dipakai?"
+
 
 ## 🛠️ Teknologi yang Digunakan
 
