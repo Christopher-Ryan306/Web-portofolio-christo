@@ -115,7 +115,42 @@ Cara upload:
 - **Nama:** Christopher Ryan Johnson
 - **Email:** rynz3060@gmail.com
 - **Instagram:** @nna.yrrr
+- 
+## 🚀 Cara Menjalankan Website
 
+### Prasyarat
+
+Pastikan sudah terinstall di komputer kamu:
+
+| Software | Cek Versi | Download |
+|----------|-----------|----------|
+| **PHP 8.1+** | `php -v` | https://php.net |
+| **Composer** | `composer --version` | https://getcomposer.org |
+| **Node.js & NPM** | `node -v` dan `npm -v` | https://nodejs.org |
+
+### Langkah Menjalankan (Lakukan Secara Berurutan)
+
+**1. Buka Terminal di Folder Project**
+```bash
+cd Web-portofolio-christo
+
+# 1. Install dependencies (pertama kali saja)
+composer install && npm install
+
+# 2. Setup environment
+cp .env.example .env && php artisan key:generate
+
+# 3. Setup database
+touch database/database.sqlite && php artisan migrate && php artisan storage:link
+
+# 4. Buat user admin (pertama kali saja)
+php artisan tinker --execute="App\Models\User::create(['name'=>'Admin','email'=>'admin@admin.com','password'=>bcrypt('password123')]);"
+
+# 5. Jalankan website (2 terminal terpisah)
+npm run dev   # Terminal 1
+php artisan serve   # Terminal 2
+
+# 6. Buka browser ke http://127.0.0.1:8000
 ---
 
 **Dibuat untuk memenuhi tugas portfolio pribadi.**
